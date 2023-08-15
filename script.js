@@ -67,37 +67,40 @@ searchIcon.addEventListener("click", () => {
       const regions = data.length;
       console.log(regions);
       countryName.innerText = data[0].country;
-
-      data.forEach((r) => {
-        const p = document.createElement("p");
-        p.innerText = r.region;
-        const reg = document.createElement("h2");
-        reg.innerText = r.region ? `Region: ${r.region} ` : "No region";
-        reg.style.width = "1500px";
-        reg.className = "region";
-        cardCountainer.append(reg);
-
-        let objLength = Object.entries(r.cases).length;
-        for (let i = 0; i < objLength; i++) {
-          message.classList.replace("block", "hidden");
-          cardCountainer.classList.replace("hidden", "flex");
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `<img id="coronaPic" src="Coronavirus-Shutterstock-CMS.jpg" alt="" />
-          <div class="card-content">
-            <p id="date">${Object.entries(r.cases)[i][0]}</p>
-            <p>Total: <span id="total">${
-              Object.entries(r.cases)[i][1]["total"]
-            }</span></p>
-            <p>New: <span id="new">${
-              Object.entries(r.cases)[i][1]["new"]
-            }</span></p>
-          </div>`;
-          cardCountainer.append(card);
-          darkBtn.addEventListener("click", () => {
-            card.classList.toggle("card-color");
-          });
-        }
-      });
+      showCards(data);
     });
 });
+
+const showCards = (data) => {
+  data.forEach((r) => {
+    const p = document.createElement("p");
+    p.innerText = r.region;
+    const reg = document.createElement("h2");
+    reg.innerText = r.region ? `Region: ${r.region} ` : "No region";
+    reg.style.width = "1500px";
+    reg.className = "region";
+    cardCountainer.append(reg);
+
+    let objLength = Object.entries(r.cases).length;
+    for (let i = 0; i < objLength; i++) {
+      message.classList.replace("block", "hidden");
+      cardCountainer.classList.replace("hidden", "flex");
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<img id="coronaPic" src="Coronavirus-Shutterstock-CMS.jpg" alt="" />
+      <div class="card-content">
+        <p id="date">${Object.entries(r.cases)[i][0]}</p>
+        <p>Total: <span id="total">${
+          Object.entries(r.cases)[i][1]["total"]
+        }</span></p>
+        <p>New: <span id="new">${
+          Object.entries(r.cases)[i][1]["new"]
+        }</span></p>
+      </div>`;
+      cardCountainer.append(card);
+      darkBtn.addEventListener("click", () => {
+        card.classList.toggle("card-color");
+      });
+    }
+  });
+};

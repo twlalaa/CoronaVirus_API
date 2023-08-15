@@ -37,29 +37,37 @@ window.addEventListener("scroll", () => {
 });
 
 searchIcon.addEventListener("click", () => {
+  message.classList.replace("hidden", "block");
+  cardCountainer.classList.replace("flex", "hidden");
+  cardCountainer.innerHTML = "";
+  countryName.textContent = "";
   const searchedValue = searchInput.value.trim();
   fetch(`https://api.api-ninjas.com/v1/covid19?country=${searchedValue}`, {
     headers: {
-      "X-Api-Key": `14I46t10KHlTvs2qL1wcKQ==y84nxuztnx838eMd`,
+      "X-Api-Key": `kvGrcHWKTvlAj8o7uLhhnCg38oDLidio4bnlbVD0`,
     },
   })
     .then((resp) => resp.json())
     .then((data) => {
-      cardCountainer.innerHTML = "";
       console.log(data);
-      if (data.length === 0) {
-        countryName.innerText = "Country is not defined, please try again.";
+      if (!searchedValue) {
+        countryName.innerText = "Cannot be empty, please try again.";
+        message.classList.replace("block", "hidden");
+
         return;
       }
-      countryName.innerText = data[0].country;
-      console.log(data);
-      // const cases = data[0].cases; //this is an object, inside it there are case objects
-      // console.log(Object.entries(cases));
+      if (data.length === 0) {
+        countryName.innerText = "Country is not idetifined, please try again.";
+        message.classList.replace("block", "hidden");
 
-      // console.log(objLength);
+        return;
+      }
+      console.log(data);
 
       const regions = data.length;
       console.log(regions);
+      countryName.innerText = data[0].country;
+
       data.forEach((r) => {
         const p = document.createElement("p");
         p.innerText = r.region;
@@ -68,10 +76,11 @@ searchIcon.addEventListener("click", () => {
         reg.style.width = "1500px";
         reg.className = "region";
         cardCountainer.append(reg);
-        // console.log(r.region);
-        // console.log(r.cases);
+
         let objLength = Object.entries(r.cases).length;
         for (let i = 0; i < objLength; i++) {
+          message.classList.replace("block", "hidden");
+          cardCountainer.classList.replace("hidden", "flex");
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `<img id="coronaPic" src="Coronavirus-Shutterstock-CMS.jpg" alt="" />

@@ -193,6 +193,7 @@ main {
 }
 
 #message {
+  color: red;
   font-size: 24px;
   position: absolute;
   top: 50%;

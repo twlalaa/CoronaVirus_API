@@ -4,6 +4,8 @@ const cardCountainer = document.querySelector(".card-container");
 
 const searchInput = document.getElementById("searchInput");
 
+const message = document.getElementById("message");
+
 let api = [];
 
 const title = document.getElementById("header-title");
@@ -43,6 +45,7 @@ searchIcon.addEventListener("click", () => {
   })
     .then((resp) => resp.json())
     .then((data) => {
+      cardCountainer.innerHTML = "";
       console.log(data);
       if (data.length === 0) {
         countryName.innerText = "Country is not defined, please try again.";
@@ -55,15 +58,11 @@ searchIcon.addEventListener("click", () => {
 
       // console.log(objLength);
 
-      cardCountainer.innerHTML = "";
-      data.forEach((d) => {
-        const p = document.createElement("p");
-        p.innerText = d.region;
-      });
-
       const regions = data.length;
       console.log(regions);
       data.forEach((r) => {
+        const p = document.createElement("p");
+        p.innerText = r.region;
         const reg = document.createElement("h2");
         reg.innerText = r.region ? `Region: ${r.region} ` : "No region";
         reg.style.width = "1500px";
